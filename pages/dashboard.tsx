@@ -6,9 +6,9 @@ import { en, formFieldName } from "./component/common";
 const inter = Inter({ subsets: ["latin"] });
 
 interface expencesData {
-    balanceDate?: number;
-    balanceAmount?: number;
-    dailyExpence?: number;
+  balanceDate?: number;
+  balanceAmount?: number;
+  dailyExpence?: number;
 }
 
 export default function Dashboard() {
@@ -28,7 +28,7 @@ export default function Dashboard() {
     var myDate = new Date();
     var hrs = myDate.getHours();
     getTime(hrs);
-  },[]);
+  }, []);
 
   const getTime = (hrs: any) => {
     if (hrs < 12) setTime("Good Morning");
@@ -54,7 +54,7 @@ export default function Dashboard() {
     setUserName(user);
     setProfilePic(userPic);
     currentMonthDays();
-  },[]);
+  }, []);
   const expence = () => {
     if (totalDays && currentDate) {
       const balanceDate = totalDays - currentDate;
@@ -140,16 +140,25 @@ export default function Dashboard() {
               <div className="flex items-center justify-between ">
                 <div className="flex items-stretch">
                   <div className="text-gray-400 text-xs">
-                  <div>
-              <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="" className="hover:underline">Designed and developed <br /> by Pragatheeswaran™</a></span>
-              </div>
+                    <div>
+                      <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                        © 2023{" "}
+                        <a href="" className="hover:underline">
+                          Designed and developed <br /> by Pragatheeswaran
+                        </a>
+                      </span>
+                    </div>
                   </div>
                   <div className="h-100 border-l mx-4"></div>
                   <div className="flex flex-nowrap -space-x-3">
                     <div className="h-9 w-9">
-                      <img
+                      <Image
                         className="object-cover w-full h-full rounded-full"
                         src={profilePic || ""}
+                        alt="Icon by Icon8"
+                        width={180}
+                        height={37}
+                        priority
                       />
                     </div>
                   </div>
@@ -213,7 +222,8 @@ export default function Dashboard() {
                     </div>
                     <div className="p-4 bg-yellow-100 rounded-xl text-gray-800">
                       <div className="font-bold text-2xl leading-none">
-                        { expenceData.balanceAmount && `${en.indianRupee} ${expenceData.balanceAmount}`}
+                        {expenceData.balanceAmount &&
+                          `${en.indianRupee} ${expenceData.balanceAmount}`}
                       </div>
                       <div className="mt-2">{en.balanceAmount}</div>
                     </div>
@@ -223,7 +233,8 @@ export default function Dashboard() {
                           {en.dailyHeader}
                         </div>
                         <div className="mt-2 font-bold">
-                          {expenceData.dailyExpence && `${en.indianRupee} ${expenceData.dailyExpence}`}
+                          {expenceData.dailyExpence &&
+                            `${en.indianRupee} ${expenceData.dailyExpence}`}
                         </div>
                       </div>
                     </div>
