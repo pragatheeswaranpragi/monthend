@@ -5,31 +5,34 @@ import { useRouter } from 'next/router'
 //firebase
 import { Inter } from 'next/font/google';
 import { initFirebase } from '../firebase/firebaseApp';
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "firebase/auth";
+import {GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase/firebaseApp";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
-import {en, message } from '../component/common';
+import {en, message} from '../component/common'
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const app = initFirebase();
   const provider = new GoogleAuthProvider();
-  const auth = getAuth();
-  const [user, loading] = useAuthState(auth);
-  const [fullName, setFullName] = useState<string>('')
   const [email, setEmail] = useState<any>('');
-  const [password, setPassword] = useState<any>('')
+  const [password, setPassword] = useState<string>('');
+  const [disable, setDisable] = useState<boolean>(false);
   let router = useRouter();
+
   const formSignin = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((data) => {
       // Signed in 
-      const user = userCredential.user
-      sessionStorage.setItem("userName", fullName || '');
-      toast.success(message.siginMessage, {
+      const user = data.user
+      const userName = user.email?.split('@')[0]
+      sessionStorage.setItem("userName", userName || '');
+      if(user?.metadata?.creationTime) {
+        sessionStorage.setItem("createdTime", user?.metadata?.creationTime)
+      }
+      toast.success(message.loginMessage, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -39,12 +42,23 @@ export default function Home() {
         progress: undefined,
         theme: "light",
       });
+      setDisable(true)
+      console.log(user.metadata.creationTime)
       router.push('/dashboard')
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
-      // ..
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     });
   }
 
@@ -52,21 +66,13 @@ export default function Home() {
     await signInWithPopup(auth, provider).then((data) => {
       if(data){
         sessionStorage.setItem("userName", data.user.displayName || '');
-        sessionStorage.setItem("userPic", data.user.photoURL || '');
-        toast.success(message.siginMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        sessionStorage.setItem("userPic", data.user.photoURL || ''); 
+        console.log(data)
         router.push('/dashboard')
       }
     })
   }
+
   return (
     <main className={`min-h-screen bg-gray-100 text-gray-900 flex justify-center ${inter.className}`}>
     <div
@@ -85,7 +91,7 @@ export default function Home() {
         </div>
         <div className="mt-12 flex flex-col items-center">
           <h5 className="text-2xl xl:text-3xl font-bold">
-            {`${en.signup} ${en.applicationName} Application`}
+            {`${en.login} ${en.applicationName} Application`}
           </h5>
           <p>{en.credit} <span className='font-bold text-indigo-600'>{en.developer}</span></p>
           <div className="w-full flex-1 mt-8">
@@ -124,28 +130,21 @@ export default function Home() {
               <div
                 className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2"
               >
-                Or sign up with e-mail
+                {`Or ${en.login} with e-mail`}
               </div>
             </div>
 
             <div className="mx-auto max-w-xs">
-            <input
-                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                type="text"
-                value={fullName}
-                placeholder="full name"
-                onChange={(e) => setFullName(e.target.value)}
-              />
-              <div className='flex gap-2'>
+              <div className='flex flex-col gap-2'>
               <input
-                className="w-1/2 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                 type="email"
                 value={email}
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
-                className="w-1/2 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -153,6 +152,7 @@ export default function Home() {
               />
               </div>
               <button
+                onClick={formSignin}
                 className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
               >
                 <svg
@@ -167,15 +167,15 @@ export default function Home() {
                   <circle cx="8.5" cy="7" r="4" />
                   <path d="M20 8v6M23 11h-6" />
                 </svg>
-                <span className="ml-3" onClick={formSignin}>
-                  {en.signup}
+                <span className="ml-3">
+                  {en.login}
                 </span>
               </button>
             </div>
             <div className="flex items-center justify-between px-10">
                       <div className="flex items-start">
                       </div>
-                      <Link href="/login" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.alreadyUser}</Link>
+                      <Link href="/" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.newUser}</Link>
                   </div>
           </div>
         </div>

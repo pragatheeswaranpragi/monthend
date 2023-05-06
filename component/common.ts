@@ -1,10 +1,27 @@
 export const en = {
+    developer: 'Pragatheeswaran',
+    devTamil: 'பிரகதீஸ்வரன்',
+    credit: 'Designed and developed by',
+    signup: 'Sign up',
+    applicationName:'Month End',
+    login: 'Login',
+    googleSignUp: 'Sign up with Google',
     headerDasboard: 'Estimate your expenses',
+    monthEndTamil: 'Sigin for மாச கடைசி',
     stats: 'Stats & Estimate',
-    balanceDay: 'Balance day in current month',
+    balanceDay: 'Remaining day in current month',
     balanceAmount: 'Balance Amount',
     dailyHeader: 'You spent daily',
-    indianRupee: '₹'
+    indianRupee: '₹',
+    logout:'Logout',
+    alreadyUser: 'already user?',
+    newUser:'new user?'
+}
+
+export const message = {
+    logoutMessage:'logout successfully',
+    loginMessage:'login successfully',
+    siginMessage:'login successfully',
 }
 
 export const formFieldName = {
@@ -21,5 +38,5 @@ export const formFieldName = {
         placeholder:"Enter your mandatory expences"
     },
     submitButton: 'Start Estimate',
-    getAdvice: 'Get Advise'
+    getAdvice: 'Get Advice'
 }
