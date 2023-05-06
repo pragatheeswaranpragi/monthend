@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import { en, formFieldName } from "./component/common";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -84,14 +85,14 @@ export default function Home() {
                 <label
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                  What's your Montly Salary
+                  {formFieldName.monthlySalary.lable}
                 </label>
                 <input
-                  type="number"
-                  name="monthlySalary"
+                  type={formFieldName.monthlySalary.type}
+                  name={formFieldName.monthlySalary.name}
                   onChange={(e) => updateData(e)}
                   value={data.monthlySalary}
-                  placeholder="Montly Salary"
+                  placeholder={formFieldName.monthlySalary.placeholder}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -102,13 +103,13 @@ export default function Home() {
                   
                   className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                  What's you mandatory expences
+                  {formFieldName.mandatoryExpence.lable}
                 </label>
                 <input
-                  type="number"
-                  name="mandatoryExpence"
+                  type={formFieldName.mandatoryExpence.type}
+                  name={formFieldName.mandatoryExpence.name}
                   onChange={(e) => updateData(e)}
-                  placeholder="Mandatory Expence"
+                  placeholder={formFieldName.mandatoryExpence.placeholder}
                   className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
