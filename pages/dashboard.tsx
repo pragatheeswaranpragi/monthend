@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/Link";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import { en, formFieldName } from "../component/common";
 import Profile from "../component/Profile";
