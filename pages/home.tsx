@@ -29,7 +29,7 @@ export default function Home() {
         const userPic = sessionStorage.getItem('userPic')
         setUserName(user);
         currentMonthDays()
-    })
+    },[])
     const expence = () => {
         console.log(data)
         if(totalDays && currentDate){

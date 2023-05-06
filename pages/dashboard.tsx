@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { en, formFieldName } from "./component/common";
-import Footer from './component/footer'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +28,7 @@ export default function Dashboard() {
     var myDate = new Date();
     var hrs = myDate.getHours();
     getTime(hrs);
-  });
+  },[]);
 
   const getTime = (hrs: any) => {
     if (hrs < 12) setTime("Good Morning");
@@ -55,7 +54,7 @@ export default function Dashboard() {
     setUserName(user);
     setProfilePic(userPic);
     currentMonthDays();
-  });
+  },[]);
   const expence = () => {
     if (totalDays && currentDate) {
       const balanceDate = totalDays - currentDate;
