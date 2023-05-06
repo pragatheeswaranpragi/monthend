@@ -84,10 +84,10 @@ export default function Home() {
         />
         </div>
         <div className="mt-12 flex flex-col items-center">
-          <h5 className="text-2xl xl:text-3xl font-bold">
+          <h5 className="text-lg xl:text-2xl font-bold">
             {`${en.signup} ${en.applicationName} Application`}
           </h5>
-          <p>{en.credit} <span className='font-bold text-indigo-600'>{en.developer}</span></p>
+          <p className='text-center'>{en.credit} <span className='font-bold text-indigo-600'>{en.developer}</span></p>
           <div className="w-full flex-1 mt-8">
             <div className="flex flex-col items-center">
               <button

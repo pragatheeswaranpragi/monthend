@@ -4,10 +4,8 @@ import { useRouter } from 'next/router'
 
 //firebase
 import { Inter } from 'next/font/google';
-import { initFirebase } from '../firebase/firebaseApp';
 import {GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/firebaseApp";
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
 import {en, message} from '../component/common'
 import { toast, ToastContainer } from "react-toastify";
@@ -35,12 +33,6 @@ export default function Home() {
       toast.success(message.loginMessage, {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
       });
       setDisable(true)
       console.log(user.metadata.creationTime)
@@ -52,12 +44,6 @@ export default function Home() {
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
       });
     });
   }
@@ -90,10 +76,10 @@ export default function Home() {
         />
         </div>
         <div className="mt-12 flex flex-col items-center">
-          <h5 className="text-2xl xl:text-3xl font-bold">
+          <h5 className="text-xl xl:text-2xl font-bold">
             {`${en.login} ${en.applicationName} Application`}
           </h5>
-          <p>{en.credit} <span className='font-bold text-indigo-600'>{en.developer}</span></p>
+          <p className='text-center'>{en.credit} <span className='font-bold text-indigo-600'>{en.developer}</span></p>
           <div className="w-full flex-1 mt-8">
             <div className="flex flex-col items-center">
               <button

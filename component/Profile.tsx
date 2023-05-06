@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 // nextjs component
 import Image from "next/image";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 // firebase
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseApp";
@@ -17,32 +17,30 @@ export default function Profile() {
 
   // logout firebase
   const logOut = () => {
-    signOut(auth)
-      .then(() => {
-        toast.success(message.logoutMessage, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      })
-      router.push('/login')
-      .catch((error) => {
-        toast.error(message.logoutMessage, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
+    signOut(auth).then(() => {
+      toast.success(message.logoutMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
       });
+    });
+    router.push("/login").catch((error) => {
+      toast.error(message.logoutMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    });
   };
 
   useEffect(() => {
@@ -54,7 +52,8 @@ export default function Profile() {
   return (
     <>
       {profilePic ? (
-        <button>
+        <div className="flex flex-col item-start gap-x-2">
+            <div className="w-12">
           <Image
             className="object-cover w-full h-full rounded-full"
             src={profilePic || ""}
@@ -63,18 +62,16 @@ export default function Profile() {
             height={37}
             priority
           />
-        </button>
-      ) : (
-        <div className="flex flex-col md:flex-row md:items-center md:gap-x-2">
-          <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <button
-              data-popover-target="popover-default"
-              type="button"
-              className="font-bold uppercase text-xl text-indigo-600 dark:text-gray-300"
-            >
-              {userName?.charAt(0)}
-            </button>
           </div>
+          <div className="capitalize break-words">
+            <p>{userName}</p>
+            <button onClick={logOut}>
+            <p className="text-sm text-indigo-600">{en.logout}</p>
+          </button>
+        </div>
+        </div>
+      ) : (
+        <div className="flex flex-row items-center gap-x-3">
           <div className="font-medium pl-5">
             <div className="capitalize break-words">{userName}</div>
             <button onClick={logOut}>
