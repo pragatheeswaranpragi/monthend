@@ -146,10 +146,8 @@ export default function Dashboard() {
                   priority
                 />
               </div>
-              <div className="flex justify-start  md:justify-between">
-                <div className="flex items-stretch">
+                <div className="flex items-end justify-between">
                   <div className="text-gray-400 text-xs">
-                    <div>
                       <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                         <Link href="https://pragatheeswaran.vercel.app/" className="hover:underline">
                           {en.credit} <br />{" "}
@@ -158,15 +156,11 @@ export default function Dashboard() {
                           </span>
                         </Link>
                       </span>
-                    </div>
                   </div>
-                  <div className="h-100 border-l mx-4"></div>
-                  <div className="flex flex-nowrap -space-x-3">
-                    <div className="h-9 w-9"></div>
+                  <div className="">
+                    <Profile />
                   </div>
                 </div>
-                <Profile />
-              </div>
               <hr className="my-10" />
               <div className="grid md:grid-cols-2 gap-x-20 ">
                 <div className="order-2 md:order-1">
