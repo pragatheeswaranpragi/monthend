@@ -1,4 +1,5 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import Link from "next/Link";
 import { useRouter } from 'next/router'
 
 //firebase
@@ -15,13 +16,10 @@ import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const app = initFirebase();
   const provider = new GoogleAuthProvider();
-  const [user, loading] = useAuthState(auth);
-  const [fullName, setFullName] = useState<string>('')
   const [email, setEmail] = useState<any>('');
-  const [password, setPassword] = useState<any>('');
-  const [disable, setDisable] = useState<any>(false);
+  const [password, setPassword] = useState<string>('');
+  const [disable, setDisable] = useState<boolean>(false);
   let router = useRouter();
 
   const formSignin = () => {
@@ -177,7 +175,7 @@ export default function Home() {
             <div className="flex items-center justify-between px-10">
                       <div className="flex items-start">
                       </div>
-                      <a href="/" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.newUser}</a>
+                      <Link href="/" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.newUser}</Link>
                   </div>
           </div>
         </div>

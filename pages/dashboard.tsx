@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/Link";
 import { Inter } from "next/font/google";
 import { en, formFieldName } from "../component/common";
 import Profile from "../component/Profile";
@@ -150,12 +151,12 @@ export default function Dashboard() {
                   <div className="text-gray-400 text-xs">
                     <div>
                       <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                        <a href="" className="hover:underline">
+                        <Link href="https://pragatheeswaran.vercel.app/" className="hover:underline">
                           {en.credit} <br />{" "}
                           <span className="text-indigo-500 font-bold text-lg">
                             {en.developer}
                           </span>
-                        </a>
+                        </Link>
                       </span>
                     </div>
                   </div>

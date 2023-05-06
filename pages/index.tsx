@@ -1,4 +1,5 @@
-import Image from 'next/image'
+import Image from 'next/image';
+import Link from "next/Link";
 import { useRouter } from 'next/router'
 
 //firebase
@@ -174,7 +175,7 @@ export default function Home() {
             <div className="flex items-center justify-between px-10">
                       <div className="flex items-start">
                       </div>
-                      <a href="/login" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.alreadyUser}</a>
+                      <Link href="/login" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{en.alreadyUser}</Link>
                   </div>
           </div>
         </div>
@@ -194,6 +195,7 @@ export default function Home() {
         </div>
       </div>
     </div>
+    <ToastContainer />
   </main>
   )
 }
