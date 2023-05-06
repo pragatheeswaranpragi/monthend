@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import { en, formFieldName } from "./component/common";
+import { en, formFieldName } from "../component/common";
 
 const inter = Inter({ subsets: ['latin'] })
 
