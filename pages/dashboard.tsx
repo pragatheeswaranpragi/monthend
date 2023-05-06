@@ -219,7 +219,7 @@ export default function Dashboard() {
                         </div>
                         <div className="mt-2 font-bold">
                           {`${en.indianRupee} ${
-                            expenceData?.dailyExpence || 0
+                            expenceData?.dailyExpence ? Math.round(expenceData?.dailyExpence) : 0
                           }`}
                         </div>
                       </div>
