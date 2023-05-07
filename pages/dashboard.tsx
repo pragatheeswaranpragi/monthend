@@ -137,10 +137,11 @@ export default function Dashboard() {
               );
           }
       }
-    }else {
+    } else {
       setMessage(`Inaiku than last date so ${balanceAmount} ithan irukku.`);
     }
-  };
+  }
+  }
   return (
     <div className="bg-indigo-50 h-screen">
       <main className="md:pt-16 max-h-screen overflow-auto">
