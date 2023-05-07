@@ -106,7 +106,7 @@ export default function Dashboard() {
             )} selavu panalam, Intha month thandrathu Konjam kastam than.`
           );
           setImageMeme("");
-        } else {
+        } else if(balanceAmount > 0) {
           if (data.productPrice && data.productName) {
             setMessage(
               `Balance rupee ${balanceAmount} irukku, Daily rupee ${Math.round(
@@ -124,10 +124,21 @@ export default function Dashboard() {
               )} selavu panalam, Intha month 25 thanduva nee?`
             );
           }
-        }
-      } else {
-        setMessage(`Inaiku than last date so ${balanceAmount} ithan irukku.`);
+        } else {
+          if (data.productPrice && data.productName) {
+            setMessage(
+              `Already Balance negative la poguthu ithula ${data.productName} vaanga plan podra paaru.`
+            );
+            setImageMeme("/negative.jpg");
+          } else {
+            setImageMeme("/kaasuilapa.jpg");
+              setMessage(
+                `Already Balance negative la poguthu boss?`
+              );
+          }
       }
+    }else {
+      setMessage(`Inaiku than last date so ${balanceAmount} ithan irukku.`);
     }
   };
   return (
