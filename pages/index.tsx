@@ -80,7 +80,7 @@ export default function Home() {
           alt="Icon by Icon8"
           width={180}
           height={37}
-          priority
+          loading='lazy'
         />
         </div>
         <div className="mt-12 flex flex-col items-center">
