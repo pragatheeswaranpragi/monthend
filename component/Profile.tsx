@@ -60,7 +60,7 @@ export default function Profile() {
             alt="profile pic"
             width={180}
             height={37}
-            priority
+            loading='lazy'
           />
           </div>
           <div className="capitalize break-words">

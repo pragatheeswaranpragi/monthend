@@ -143,7 +143,7 @@ export default function Dashboard() {
                   alt="Icon by Icon8"
                   width={180}
                   height={37}
-                  priority
+                  loading='lazy'
                 />
               </div>
                 <div className="flex items-end justify-between">
