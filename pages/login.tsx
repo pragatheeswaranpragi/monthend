@@ -27,6 +27,7 @@ export default function Home() {
       const user = data.user
       const userName = user.email?.split('@')[0]
       sessionStorage.setItem("userName", userName || '');
+      sessionStorage.setItem('user', JSON.stringify(user));
       if(user?.metadata?.creationTime) {
         sessionStorage.setItem("createdTime", user?.metadata?.creationTime)
       }
@@ -35,7 +36,6 @@ export default function Home() {
         autoClose: 5000,
       });
       setDisable(true)
-      console.log(user.metadata.creationTime)
       router.push('/dashboard')
     })
     .catch((error) => {
