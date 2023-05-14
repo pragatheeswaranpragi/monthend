@@ -18,15 +18,18 @@ export default function Home() {
   const [email, setEmail] = useState<any>('');
   const [password, setPassword] = useState<string>('');
   const [disable, setDisable] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   let router = useRouter();
 
   const formSignin = () => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
     .then((data) => {
       // Signed in 
       const user = data.user
       const userName = user.email?.split('@')[0]
       sessionStorage.setItem("userName", userName || '');
+      sessionStorage.setItem('user', JSON.stringify(user));
       if(user?.metadata?.creationTime) {
         sessionStorage.setItem("createdTime", user?.metadata?.creationTime)
       }
@@ -35,7 +38,7 @@ export default function Home() {
         autoClose: 5000,
       });
       setDisable(true)
-      console.log(user.metadata.creationTime)
+      setLoading(false);
       router.push('/dashboard')
     })
     .catch((error) => {
@@ -58,9 +61,23 @@ export default function Home() {
       }
     })
   }
-
   return (
-    <main className={`min-h-screen bg-gray-100 text-gray-900 flex justify-center ${inter.className}`}>
+    <main className={`min-h-screen bg-white text-gray-900 flex justify-center ${inter.className}`}>
+      {loading ? (
+          <div className="flex justify-center items-center">
+            <div className="w-56 h-56">
+              <Image
+                className="w-full"
+                src={"/loading.gif"}
+                alt="Icon by Icon8"
+                width={130}
+                height={127}
+                priority
+              />
+              <p className="text-2xl font-bold">Loading.....</p>
+            </div>
+          </div>
+        ) : (
     <div
       className="max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex justify-center flex-1"
     >
@@ -181,6 +198,7 @@ export default function Home() {
         </div>
       </div>
     </div>
+    )}
     <ToastContainer />
   </main>
   )

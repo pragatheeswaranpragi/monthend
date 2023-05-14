@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 import { en, formFieldName } from "../component/common";
 import Profile from "../component/Profile";
+//firebase
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseApp";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +28,7 @@ export default function Dashboard() {
   const [imageMeme, setImageMeme] = useState<any>();
   const [time, setTime] = useState<string>("");
   const [needAdvise, setNeedAdvice] = useState<boolean>(false);
+  const [userDetails, setUserDetails] = useState<any>()
 
   useEffect(() => {
     var myDate = new Date();
@@ -53,7 +57,9 @@ export default function Dashboard() {
   useEffect(() => {
     const user = sessionStorage.getItem("userName");
     const userPic = sessionStorage.getItem("userPic");
+    const userData = JSON.parse(sessionStorage.user)
     setUserName(user);
+    setUserDetails(userData)
     setProfilePic(userPic);
     currentMonthDays();
     if (totalDays && currentDate) {
@@ -64,6 +70,22 @@ export default function Dashboard() {
       });
     }
   }, []);
+
+  const saveUserDetails = () => {
+    const payload = {
+      ...data,
+      name: userName,
+    };
+    const docRef = doc(db, 'estimateData', userDetails.uid);
+    setDoc(docRef, payload)
+      .then((docRef) => {
+        console.log("Entire Document has been updated successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const expence = () => {
     if (totalDays && currentDate) {
       const balanceDate = totalDays - currentDate;
@@ -106,7 +128,7 @@ export default function Dashboard() {
             )} selavu panalam, Intha month thandrathu Konjam kastam than.`
           );
           setImageMeme("");
-        } else if(balanceAmount > 0) {
+        } else if (balanceAmount > 0) {
           if (data.productPrice && data.productName) {
             setMessage(
               `Balance rupee ${balanceAmount} irukku, Daily rupee ${Math.round(
@@ -132,16 +154,15 @@ export default function Dashboard() {
             setImageMeme("/negative.jpg");
           } else {
             setImageMeme("/kaasuilapa.jpg");
-              setMessage(
-                `Already Balance negative la poguthu boss?`
-              );
+            setMessage(`Already Balance negative la poguthu boss?`);
           }
+        }
+      } else {
+        setMessage(`Inaiku than last date so ${balanceAmount} ithan irukku.`);
       }
-    } else {
-      setMessage(`Inaiku than last date so ${balanceAmount} ithan irukku.`);
+      saveUserDetails();
     }
-  }
-  }
+  };
   return (
     <div className="bg-indigo-50 h-screen">
       <main className="md:pt-16 max-h-screen overflow-auto">
@@ -155,24 +176,27 @@ export default function Dashboard() {
                   alt="Icon by Icon8"
                   width={180}
                   height={37}
-                  loading='lazy'
+                  loading="lazy"
                 />
               </div>
-                <div className="flex items-end justify-between">
-                  <div className="text-gray-400 text-xs">
-                      <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                        <Link href="https://pragatheeswaran.vercel.app/" className="hover:underline">
-                          {en.credit} <br />{" "}
-                          <span className="text-indigo-500 font-bold text-lg">
-                            {en.developer}
-                          </span>
-                        </Link>
+              <div className="flex items-end justify-between">
+                <div className="text-gray-400 text-xs">
+                  <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+                    <Link
+                      href="https://pragatheeswaran.vercel.app/"
+                      className="hover:underline"
+                    >
+                      {en.credit} <br />{" "}
+                      <span className="text-indigo-500 font-bold text-lg">
+                        {en.developer}
                       </span>
-                  </div>
-                  <div className="">
-                    <Profile />
-                  </div>
+                    </Link>
+                  </span>
                 </div>
+                <div className="">
+                  <Profile />
+                </div>
+              </div>
               <hr className="my-10" />
               <div className="grid md:grid-cols-2 gap-x-20 ">
                 <div className="order-2 md:order-1">
@@ -200,7 +224,7 @@ export default function Dashboard() {
                               <Image
                                 className="w-full"
                                 src={imageMeme}
-                                alt="Icon by Icon8"
+                                alt="No meme"
                                 width={180}
                                 height={37}
                                 priority
@@ -231,7 +255,9 @@ export default function Dashboard() {
                         </div>
                         <div className="mt-2 font-bold">
                           {`${en.indianRupee} ${
-                            expenceData?.dailyExpence ? Math.round(expenceData?.dailyExpence) : 0
+                            expenceData?.dailyExpence
+                              ? Math.round(expenceData?.dailyExpence)
+                              : 0
                           }`}
                         </div>
                       </div>
