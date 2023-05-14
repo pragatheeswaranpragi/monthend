@@ -163,7 +163,6 @@ export default function Dashboard() {
       saveUserDetails();
     }
   };
-  console.log(data);
   return (
     <div className="bg-indigo-50 h-screen">
       <main className="md:pt-16 max-h-screen overflow-auto">

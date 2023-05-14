@@ -78,7 +78,6 @@ export default function Form() {
     setTotalPercentage(percentageList)
     setStoredData(salaryDetails);
     const listTupple = [...tasks, list];
-    console.log(listTupple)
     setTasks(listTupple[0]);
     setLoading(false);
   };
@@ -98,7 +97,6 @@ export default function Form() {
   };
   const saveUserDetails = () => {
     const userData = JSON.parse(sessionStorage.user);
-    console.log(tasks)
     tasks.map((data: any) => {
       const uniqueId = uuidv4();
       const docRef = doc(db, "expenses", uniqueId);
@@ -109,13 +107,13 @@ export default function Form() {
       };
       setDoc(docRef, payload)
         .then((docRef) => {
-          toast.success("Entire Document has been updated successfully", {
-            position: "top-right",
-            autoClose: 5000,
-          });
         })
         .catch((error) => {
           console.log(error);
+        });
+        toast.success("Entire Document has been updated successfully", {
+          position: "top-right",
+          autoClose: 5000,
         });
     });
   };
@@ -134,7 +132,6 @@ export default function Form() {
   useEffect(() => {
     getDataFromStore();
   }, []);
-  console.log(tasks)
   return (
     <div className="h-screen bg-white flex flex-col w-full px-12">
       <div>
@@ -162,7 +159,7 @@ export default function Form() {
         </div>
 
         <div>
-          <p className="text-2xl text-green-600">{`Balance: ${en.indianRupee} ${
+          <p className="text-2xl text-green-600">{`Total Income: ${en.indianRupee} ${
             storedData[0]?.monthlySalary || 0
           }`}</p>
           <div className="p-6 flex items-center">
@@ -257,7 +254,6 @@ export default function Form() {
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
-                          {console.log(item)}
                           <div className="round-full w-12 h-12">
                             <Image
                               className="w-full"
