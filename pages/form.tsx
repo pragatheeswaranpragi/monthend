@@ -249,11 +249,10 @@ export default function Form() {
                   </thead>
                   <tbody>
                     {tasks.map((item: any, index: number) => (
-                      <tr className="bg-white dark:bg-gray-800">
+                      <tr className="bg-white dark:bg-gray-800" key={index}>
                         <th
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                          key={index}
                         >
                           <div className="round-full w-12 h-12">
                             <Image
