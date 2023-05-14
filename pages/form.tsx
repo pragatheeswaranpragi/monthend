@@ -21,7 +21,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseApp";
 
-export default function form() {
+export default function Form() {
   const [tasks, setTasks] = useState<any>([]);
   const [task, setTask] = useState<any>();
   const [storedData, setStoredData] = useState<any>([]);
