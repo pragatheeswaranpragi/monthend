@@ -131,7 +131,7 @@ export default function Form() {
 
   useEffect(() => {
     getDataFromStore();
-  }, []);
+  },[]);
   return (
     <div className="h-screen bg-white flex flex-col w-full px-12">
       <div>
@@ -253,6 +253,7 @@ export default function Form() {
                         <th
                           scope="row"
                           className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          key={index}
                         >
                           <div className="round-full w-12 h-12">
                             <Image
